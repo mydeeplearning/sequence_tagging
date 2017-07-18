@@ -5,6 +5,7 @@ UNK = "$UNK$"
 NUM = "$NUM$"
 NONE = "O"
 
+
 class CoNLLDataset(object):
     """
     Class that iterates over CoNLL Dataset
@@ -22,7 +23,8 @@ class CoNLLDataset(object):
             pass
         ```
     """
-    def __init__(self, filename, processing_word=None, processing_tag=None, 
+
+    def __init__(self, filename, processing_word=None, processing_tag=None,
                  max_iter=None):
         """
         Args:
@@ -36,7 +38,6 @@ class CoNLLDataset(object):
         self.processing_tag = processing_tag
         self.max_iter = max_iter
         self.length = None
-
 
     def __iter__(self):
         niter = 0
@@ -59,7 +60,6 @@ class CoNLLDataset(object):
                         tag = self.processing_tag(tag)
                     words += [word]
                     tags += [tag]
-
 
     def __len__(self):
         """
@@ -160,7 +160,7 @@ def load_vocab(filename):
 def export_trimmed_glove_vectors(vocab, glove_filename, trimmed_filename, dim):
     """
     Saves glove vectors in numpy array
-    
+
     Args:
         vocab: dictionary vocab[word] = index
         glove_filename: a path to a glove file
@@ -191,8 +191,8 @@ def get_trimmed_glove_vectors(filename):
         return data["embeddings"]
 
 
-def get_processing_word(vocab_words=None, vocab_chars=None, 
-                    lowercase=False, chars=False):
+def get_processing_word(vocab_words=None, vocab_chars=None,
+                        lowercase=False, chars=False):
     """
     Args:
         vocab: dict[word] = idx
@@ -243,8 +243,8 @@ def _pad_sequences(sequences, pad_tok, max_length):
 
     for seq in sequences:
         seq = list(seq)
-        seq_ = seq[:max_length] + [pad_tok]*max(max_length - len(seq), 0)
-        sequence_padded +=  [seq_]
+        seq_ = seq[:max_length] + [pad_tok] * max(max_length - len(seq), 0)
+        sequence_padded += [seq_]
         sequence_length += [min(len(seq), max_length)]
 
     return sequence_padded, sequence_length
@@ -259,10 +259,10 @@ def pad_sequences(sequences, pad_tok, nlevels=1):
         a list of list where each sublist has same length
     """
     if nlevels == 1:
-        max_length = max(map(lambda x : len(x), sequences))
-        sequence_padded, sequence_length = _pad_sequences(sequences, 
-                                            pad_tok, max_length)
-        
+        max_length = max(map(lambda x: len(x), sequences))
+        sequence_padded, sequence_length = _pad_sequences(sequences,
+                                                          pad_tok, max_length)
+
     elif nlevels == 2:
         max_length_word = max([max(map(lambda x: len(x), seq)) for seq in sequences])
         sequence_padded, sequence_length = [], []
@@ -272,11 +272,10 @@ def pad_sequences(sequences, pad_tok, nlevels=1):
             sequence_padded += [sp]
             sequence_length += [sl]
 
-        max_length_sentence = max(map(lambda x : len(x), sequences))
-        sequence_padded, _ = _pad_sequences(sequence_padded, [pad_tok]*max_length_word, 
+        max_length_sentence = max(map(lambda x: len(x), sequences))
+        sequence_padded, _ = _pad_sequences(sequence_padded, [pad_tok] * max_length_word,
                                             max_length_sentence)
         sequence_length, _ = _pad_sequences(sequence_length, 0, max_length_sentence)
-
 
     return sequence_padded, sequence_length
 
@@ -294,7 +293,7 @@ def minibatches(data, minibatch_size):
         if len(x_batch) == minibatch_size:
             yield x_batch, y_batch
             x_batch, y_batch = [], []
-        
+
         if type(x[0]) == tuple:
             x = zip(*x)
         x_batch += [x]
@@ -358,5 +357,5 @@ def get_chunks(seq, tags):
     if chunk_type is not None:
         chunk = (chunk_type, chunk_start, len(seq))
         chunks.append(chunk)
-    
+
     return chunks
