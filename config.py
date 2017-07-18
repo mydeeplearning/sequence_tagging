@@ -26,9 +26,9 @@ class Config():
     trimmed_filename = "data/glove.6B.{}d.trimmed.npz".format(dim)
 
     # dataset
-    dev_filename = "data/coNLL/eng/eng.testa.iob"
-    test_filename = "data/coNLL/eng/eng.testb.iob"
-    train_filename = "data/coNLL/eng/eng.train.iob"
+    dev_filename = "data/eng.testa.iob"
+    test_filename = "data/eng.testb.iob"
+    train_filename = "data/eng.train.iob"
     max_iter = None # if not None, max number of examples
 
     # vocab (created from dataset with build_data.py)
@@ -50,6 +50,6 @@ class Config():
     char_hidden_size = 100
     
     # NOTE: if both chars and crf, only 1.6x slower on GPU
-    crf = True # if crf, training is 1.7x slower on CPU
-    chars = True # if char embedding, training is 3.5x slower on CPU
+    crf = False # if crf, training is 1.7x slower on CPU
+    chars = False # if char embedding, training is 3.5x slower on CPU
 
