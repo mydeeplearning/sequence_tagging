@@ -34,6 +34,6 @@ model = NERModel(config, embeddings, ntags=len(vocab_tags),
 model.build()
 
 # train, evaluate and interact
-model.train(train, dev, vocab_tags)
-model.evaluate(test, vocab_tags)
+# model.train(train, dev, vocab_tags)
+# model.evaluate(test, vocab_tags)
 model.interactive_shell(vocab_tags, processing_word)
